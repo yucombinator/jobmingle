@@ -1,5 +1,6 @@
-from flask import Flask, request, flash, url_for, redirect
+from flask import Flask, request, flash, url_for, redirect, g, jsonify
 from flask.ext.github import GitHub
+from card import Card
 
 app = Flask(__name__)
 app.config['GITHUB_CLIENT_ID'] = 'XXX'
@@ -37,6 +38,25 @@ def token_getter():
     user = g.user
     if user is not None:
         return user.github_access_token
+
+@app.route('/api/getCards/<int:number>')
+def get_cards(number):
+    cards = []
+    for i in range(number):
+        cards.append(get_card())
+    return jsonify(cards)
+
+def get_card():
+    #get a random user
+    user = #getdb
+    #populate a card
+    repo = github.get('user/repos/' + user)
+    
+    username = github.get('users/' + user)
+    name = github.get('repos/cenkalti/github-flask')
+    description = github.get('repos/cenkalti/github-flask')
+    #image...
+    return Card(username,name, None, description)
 
 @app.route('/')
 def hello_world():
