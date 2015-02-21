@@ -7,11 +7,12 @@ import oauth_config
 app = Flask(__name__)
 app.config['GITHUB_CLIENT_ID'] = oauth_config.github_public_key
 app.config['GITHUB_CLIENT_SECRET'] = oauth_config.github_secret_key
-
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+db = SQLAlchemy(app)
 
 class User(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-	oauth_token = db.column(db.String(300), unique=True)
+	oauth_token = db.Column(db.String(300), unique=True)
 	def __init__(self, token):
 		self.oauth_token = token
 
@@ -62,7 +63,7 @@ def get_cards(number):
 
 def get_card():
     #get a random user
-    user = #getdb
+    #user = getdb
     #populate a card
     repo = github.get('user/repos/' + user)
 
