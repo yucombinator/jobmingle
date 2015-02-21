@@ -51,7 +51,7 @@ def get_card():
     user = #getdb
     #populate a card
     repo = github.get('user/repos/' + user)
-    
+
     username = github.get('users/' + user)
     name = github.get('repos/cenkalti/github-flask')
     description = github.get('repos/cenkalti/github-flask')
