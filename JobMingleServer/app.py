@@ -1,10 +1,11 @@
 from flask import Flask, request, flash, url_for, redirect, g, jsonify
 from flask.ext.github import GitHub
 from card import Card
+import oauth_config
 
 app = Flask(__name__)
-app.config['GITHUB_CLIENT_ID'] = 'XXX'
-app.config['GITHUB_CLIENT_SECRET'] = 'YYY'
+app.config['GITHUB_CLIENT_ID'] = oauth_config.github_public_key
+app.config['GITHUB_CLIENT_SECRET'] = oauth_config.github_secret_key
 
 # For GitHub Enterprise
 app.config['GITHUB_BASE_URL'] = 'https://HOSTNAME/api/v3/'
@@ -63,6 +64,6 @@ def hello_world():
     return 'Hello World'
 
 if __name__ == '__main__':
-    app.run()
+    app.run(),l,n
 
 
