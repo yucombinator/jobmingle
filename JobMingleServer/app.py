@@ -1,9 +1,22 @@
 from flask import Flask, request, flash, url_for, redirect
 from flask.ext.github import GitHub
+from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['GITHUB_CLIENT_ID'] = 'XXX'
 app.config['GITHUB_CLIENT_SECRET'] = 'YYY'
+
+
+class User(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	oauth_token = db.column(db.String(300), unique=True)
+	def __init__(self, token):
+		self.oauth_token = token
+
+	def __repr__():
+		return '<User %r>' % self.oauth_token
+
+
 
 # For GitHub Enterprise
 app.config['GITHUB_BASE_URL'] = 'https://HOSTNAME/api/v3/'
