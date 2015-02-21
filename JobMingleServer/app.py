@@ -7,10 +7,6 @@ app = Flask(__name__)
 app.config['GITHUB_CLIENT_ID'] = oauth_config.github_public_key
 app.config['GITHUB_CLIENT_SECRET'] = oauth_config.github_secret_key
 
-# For GitHub Enterprise
-app.config['GITHUB_BASE_URL'] = 'https://HOSTNAME/api/v3/'
-app.config['GITHUB_AUTH_URL'] = 'https://HOSTNAME/login/oauth/'
-
 github = GitHub(app)
 
 @app.route('/login')
@@ -64,6 +60,6 @@ def hello_world():
     return 'Hello World'
 
 if __name__ == '__main__':
-    app.run(),l,n
+    app.run()
 
 
