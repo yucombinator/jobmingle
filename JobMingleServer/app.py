@@ -1,11 +1,40 @@
 from flask import Flask, request, flash, url_for, redirect, g, jsonify
 from flask.ext.github import GitHub
+from flask.ext.sqlalchemy import SQLAlchemy
 from card import Card
 import oauth_config
 
 app = Flask(__name__)
 app.config['GITHUB_CLIENT_ID'] = oauth_config.github_public_key
 app.config['GITHUB_CLIENT_SECRET'] = oauth_config.github_secret_key
+app.config['SQLALCHEMY_DATABASE_URI'] = oauth_config.db_uri
+db = SQLAlchemy(app)
+
+class User(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	oauth_token = db.Column(db.String(300), unique=True)
+	def __init__(self, token):
+		self.oauth_token = token
+
+	def __repr__():
+		return '<User %r>' % self.oauth_token
+
+class Match(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	liker_id = db.Column(db.Integer)
+	liked_id = db.Column(db.Integer)
+	def __init__(self, liker, liked):
+		self.liker_id = liker
+		self.liked_id = liked
+	
+	def __repr__(self):
+		return '<Match %i>' % self.id
+
+
+	
+# For GitHub Enterprise
+app.config['GITHUB_BASE_URL'] = 'https://HOSTNAME/api/v3/'
+app.config['GITHUB_AUTH_URL'] = 'https://HOSTNAME/login/oauth/'
 
 github = GitHub(app)
 
@@ -45,7 +74,7 @@ def get_cards(number):
 
 def get_card():
     #get a random user
-    #user = #getdb
+    #user = getdb
     #populate a card
     #repo = github.get('user/repos/' + user)
 
