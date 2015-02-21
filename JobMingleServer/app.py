@@ -16,7 +16,7 @@ def login():
 @app.route('/github-callback')
 @github.authorized_handler
 def authorized(oauth_token):
-    next_url = request.args.get('next') or url_for('index')
+    next_url = request.args.get('next') or url_for('hello_world')
     if oauth_token is None:
         flash("Authorization failed.")
         return redirect(next_url)
@@ -45,13 +45,13 @@ def get_cards(number):
 
 def get_card():
     #get a random user
-    user = #getdb
+    #user = #getdb
     #populate a card
-    repo = github.get('user/repos/' + user)
+    #repo = github.get('user/repos/' + user)
 
-    username = github.get('users/' + user)
-    name = github.get('repos/cenkalti/github-flask')
-    description = github.get('repos/cenkalti/github-flask')
+    #username = github.get('users/' + user)
+    #name = github.get('repos/cenkalti/github-flask')
+    #description = github.get('repos/cenkalti/github-flask')
     #image...
     return Card(username,name, None, description)
 
@@ -60,6 +60,6 @@ def hello_world():
     return 'Hello World'
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug = True)
 
 
