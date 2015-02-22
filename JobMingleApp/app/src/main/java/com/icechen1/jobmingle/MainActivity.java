@@ -143,7 +143,7 @@ public class MainActivity extends ActionBarActivity
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             //add the view via xml or programmatically
-            SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) rootView.findViewById(R.id.card_frame);
+            final SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) rootView.findViewById(R.id.card_frame);
 
             final ArrayList al = new ArrayList<String>();
             al.add("php");
@@ -200,6 +200,22 @@ public class MainActivity extends ActionBarActivity
                     Intent intent = new Intent(getActivity(), UserCardActivity.class);
                     startActivity(intent);
                     Toast.makeText(getActivity(), "Clicked!", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            info.hoang8f.widget.FButton leftButton = (info.hoang8f.widget.FButton) rootView.findViewById(R.id.no_button);
+            info.hoang8f.widget.FButton rightButton = (info.hoang8f.widget.FButton) rootView.findViewById(R.id.yes_button);
+            leftButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    flingContainer.getTopCardListener().selectLeft();
+                }
+            });
+
+            rightButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    flingContainer.getTopCardListener().selectRight();
                 }
             });
             return rootView;

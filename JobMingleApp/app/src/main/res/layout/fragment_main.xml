@@ -49,9 +49,13 @@
                     fbutton:shadowHeight="5dp"
                     fbutton:cornerRadius="5dp"
                     android:id="@+id/no_button"
+                    android:text="@string/no"
+                    android:textColor="@color/fbutton_color_clouds"
                     />
 
                 <info.hoang8f.widget.FButton
+                    android:textColor="@color/fbutton_color_clouds"
+                    android:id="@+id/yes_button"
                     android:layout_weight="1"
                     android:layout_marginLeft="15dp"
                     android:layout_width="0dp"
@@ -61,6 +65,7 @@
                     fbutton:shadowEnabled="true"
                     fbutton:shadowHeight="5dp"
                     fbutton:cornerRadius="5dp"
+                    android:text="@string/yes"
                     android:layout_alignParentRight="true"/>
             </LinearLayout>
 
