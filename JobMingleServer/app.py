@@ -90,10 +90,11 @@ def get_card():
     repositories = github.get('users/' + user + '/repos')
     
     i=2
-    while nbOfRepos > 30:
-        repositories.append(github.get('users/' + user + '/repos?page='+i))
-        i++
-        nbOfRepos-=30
+    tempRepoNumber = nbOfRepos
+    while tempRepoNumber > 30:
+        repositories.append(github.get('users/' + user + '/repos?page='+ str(i)))
+        i+=1
+        tempRepoNumber-=30
     
     repoIndex = -1 
     if nbOfRepos <= 5: 
