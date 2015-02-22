@@ -84,10 +84,18 @@ def get_card():
     #user = User.query.all()
     user = 'icechen1'
     #populate a card
+<<<<<<< HEAD
+    username = github.get('users/' + user)["login"]
+    name = github.get('users/'+user)["name"]
+    nbOfRepos = github.get('users/' + user)['public_repos']
+    repositories = github.get('user/' + user + '/repos')
+    repoIndex = -1
+=======
     username = github.get('users/' + user)["login"] 
     name = github.get('users/'+user)["name"] 
     nbOfRepos = github.get('users/' + user)['public_repos'] 
     repositories = github.get('users/' + user + '/repos')
+>>>>>>> 717e5e8a9587683e1ba9c74f59edf9c4f10a1d3b
     
     i=2
     tempRepoNumber = nbOfRepos
@@ -97,6 +105,17 @@ def get_card():
         tempRepoNumber-=30
         repositories = repositories + tempRepo
     
+<<<<<<< HEAD
+    else:
+        tuples = []
+        for x in range(nbOfRepos):
+            tuples.append((x,repositories[x]['stargazers_count']))
+        
+        sorted(tuples, key = lambda stars:stars[1], reverse = True)
+        repoIndex = tuples[random.randint(0,4)][0]
+    
+    repoName = repositories[repoIndex]['name']
+=======
     repoIndex = -1 
     if nbOfRepos <= 5: 
         repoIndex = random.randint(0,nbOfRepos-1) 
@@ -107,6 +126,7 @@ def get_card():
         sorted_tuples = sorted(tuples, key = lambda stars:stars[1], reverse = True)
         repoIndex = sorted_tuples[random.randint(0,4)][0]
     repoName = repositories[repoIndex]['name'] 
+>>>>>>> 717e5e8a9587683e1ba9c74f59edf9c4f10a1d3b
     repoDescription = repositories[repoIndex]['description']
    
     #image...

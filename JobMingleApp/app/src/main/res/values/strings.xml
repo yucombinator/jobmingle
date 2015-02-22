@@ -14,4 +14,7 @@
     <string name="no">No</string>
     <string name="yes">Yes</string>
     <string name = "details">Details</string>
+    <string name="title_activity_login">Login to GitHub</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>
