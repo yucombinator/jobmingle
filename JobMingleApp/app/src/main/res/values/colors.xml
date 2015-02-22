@@ -21,6 +21,8 @@
     <color name="fbutton_color_silver">#bdc3c7</color>
     <color name="fbutton_color_concrete">#95a5a6</color>
     <color name="fbutton_color_asbestos">#7f8c8d</color>
+    <color name = "accent">#3F51B5</color>
+    <color name="accent_shadow">#7986CB</color>
     <color name="primary">#9C27B0</color>
     <color name="primary_dark">#7B1FA2</color>
 </resources>
