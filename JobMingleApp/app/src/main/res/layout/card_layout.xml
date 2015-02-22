@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fbutton_color_clouds">
     <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
         android:layout_gravity="center"
         android:layout_width="match_parent"
@@ -22,7 +22,8 @@
                 android:layout_margin = "25dp"
                 android:layout_weight = "5"
 
-            />
+
+                />
             <TextView
                 android:textSize="24sp"
                 android:layout_height="0dp"
@@ -31,6 +32,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text = "Username"
+
                 android:id = "@+id/card_textView"/>
         </LinearLayout>
     </android.support.v7.widget.CardView>
