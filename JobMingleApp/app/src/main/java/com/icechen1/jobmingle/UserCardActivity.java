@@ -8,19 +8,19 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+      import android.view.View;
+      import android.view.ViewGroup;
 
 /**
  * Created by Yuwei on 2015-02-21.
  */
-public class UserCardActivity extends ActionBarActivity {
+             public class UserCardActivity extends ActionBarActivity {
     private CharSequence mTitle;
     static boolean mShowingBack;
-    @Override
+     //       @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_card);
+     //          setContentView(R.layout.activity_card);
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.card_container, new UserSlideFragment())
@@ -28,16 +28,16 @@ public class UserCardActivity extends ActionBarActivity {
         mTitle = getTitle();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        // Set
+				// Set
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
+         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
+            // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
@@ -47,7 +47,7 @@ public class UserCardActivity extends ActionBarActivity {
             return true;
         }
         if (id == android.R.id.home) {
-            finish();
+ //             finish();
             return true;
         }
 
@@ -62,4 +62,4 @@ public class UserCardActivity extends ActionBarActivity {
         }
 
     }
-}
+    //   }
