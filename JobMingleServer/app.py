@@ -74,15 +74,30 @@ def get_cards(number):
 
 def get_card():
     #get a random user
-    #user = getdb
+    user = #getdb
     #populate a card
-    #repo = github.get('user/repos/' + user)
-
-    #username = github.get('users/' + user)
-    #name = github.get('repos/cenkalti/github-flask')
-    #description = github.get('repos/cenkalti/github-flask')
+    username = github.get('users/' + user).login
+    name = github.get('users/'+user).name
+    nbOfRepos = github.get('users/' + user).public_repos
+    repositories = github.get('user/' + user + 'repos')
+    repoIndex = -1
+    
+    if nbOfRepos <= 5:
+        repoIndex = randint(0,nbOfRepos-1) 
+    
+    else:
+        tuples = []
+        for x in range(nbOfRepos):
+            tuples.append((x,repositories[x].stargazers_count))
+        
+        sorted(tuples, key = lambda stars:stars[1], reverse = True)
+        repoIndex = tuples[randint(0,4)][0]
+    
+    repoName = repositories[repoIndex].name
+    repoDescription = repositories[repoIndex].description
+   
     #image...
-    return Card(username,name, None, description)
+    return Card(username,name, repoName, repoDescription)
 
 @app.route('/')
 def hello_world():
