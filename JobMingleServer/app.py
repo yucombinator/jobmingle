@@ -104,8 +104,8 @@ def get_card():
         tuples = [] 
         for x in range(len(repositories)): 
             tuples.append((x,repositories[x]['stargazers_count'])) 
-        sorted(tuples, key = lambda stars:stars[1], reverse = True)
-        repoIndex = tuples[random.randint(0,4)][0] 
+        sorted_tuples = sorted(tuples, key = lambda stars:stars[1], reverse = True)
+        repoIndex = sorted_tuples[random.randint(0,4)][0]
     repoName = repositories[repoIndex]['name'] 
     repoDescription = repositories[repoIndex]['description']
    
