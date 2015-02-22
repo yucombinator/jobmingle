@@ -87,7 +87,14 @@ def get_card():
     username = github.get('users/' + user)["login"] 
     name = github.get('users/'+user)["name"] 
     nbOfRepos = github.get('users/' + user)['public_repos'] 
-    repositories = github.get('users/' + user + '/repos') 
+    repositories = github.get('users/' + user + '/repos')
+    
+    i=2
+    while nbOfRepos > 30:
+        repositories.append(github.get('users/' + user + '/repos?page='+i))
+        i++
+        nbOfRepos-=30
+    
     repoIndex = -1 
     if nbOfRepos <= 5: 
         repoIndex = random.randint(0,nbOfRepos-1) 
