@@ -1,10 +1,11 @@
 package com.icechen1.jobmingle;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,12 +38,12 @@ public class MainActivity extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-
+    static boolean mShowingBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        mShowingBack=false;
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -56,9 +57,9 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .replace(R.id.container, CardFrontFragment.newInstance(position + 1))
                 .commit();
     }
 
@@ -115,7 +116,7 @@ public class MainActivity extends ActionBarActivity
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class CardFrontFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -126,15 +127,15 @@ public class MainActivity extends ActionBarActivity
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
+        public static CardFrontFragment newInstance(int sectionNumber) {
+            CardFrontFragment fragment = new CardFrontFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
             return fragment;
         }
 
-        public PlaceholderFragment() {
+        public CardFrontFragment() {
         }
 
         @Override
@@ -142,7 +143,7 @@ public class MainActivity extends ActionBarActivity
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             //add the view via xml or programmatically
-            SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) rootView.findViewById(R.id.frame);
+            SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) rootView.findViewById(R.id.card_frame);
 
             final ArrayList al = new ArrayList<String>();
             al.add("php");
@@ -151,7 +152,7 @@ public class MainActivity extends ActionBarActivity
             al.add("java");
 
             //choose your favorite adapter
-            final ArrayAdapter arrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.item, R.id.textView, al );
+            final CardArrayAdapter arrayAdapter = new CardArrayAdapter(getActivity(), R.layout.card_layout, al );
 
             //set the listener and the adapter
             flingContainer.setAdapter(arrayAdapter);
@@ -196,6 +197,8 @@ public class MainActivity extends ActionBarActivity
             flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClicked(int itemPosition, Object dataObject) {
+                    Intent intent = new Intent(getActivity(), UserCardActivity.class);
+                    startActivity(intent);
                     Toast.makeText(getActivity(), "Clicked!", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -209,5 +212,7 @@ public class MainActivity extends ActionBarActivity
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
     }
+
+
 
 }
