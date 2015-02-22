@@ -73,9 +73,9 @@ def get_card():
     #user = User.query.all()
     user = 'icechen1'
     #populate a card
-    username = github.get('users/' + user).login
-    name = github.get('users/'+user).name
-    nbOfRepos = github.get('users/' + user).public_repos
+    username = github.get('users/' + user)["login"]
+    name = github.get('users/'+user)["name"]
+    nbOfRepos = github.get('users/' + user)['public_repos']
     repositories = github.get('user/' + user + '/repos')
     repoIndex = -1
     
@@ -85,13 +85,13 @@ def get_card():
     else:
         tuples = []
         for x in range(nbOfRepos):
-            tuples.append((x,repositories[x].stargazers_count))
+            tuples.append((x,repositories[x]['stargazers_count']))
         
         sorted(tuples, key = lambda stars:stars[1], reverse = True)
         repoIndex = tuples[random.randint(0,4)][0]
     
-    repoName = repositories[repoIndex].name
-    repoDescription = repositories[repoIndex].description
+    repoName = repositories[repoIndex]['name']
+    repoDescription = repositories[repoIndex]['description']
    
     #image...
     return Card(username,name, repoName, repoDescription)

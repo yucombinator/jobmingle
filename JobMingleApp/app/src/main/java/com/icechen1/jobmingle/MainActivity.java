@@ -2,6 +2,7 @@ package com.icechen1.jobmingle;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.app.Fragment;
@@ -23,6 +24,17 @@ import android.widget.Toast;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -52,6 +64,8 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+        GetCardTask task = new GetCardTask();
+        task.execute();
     }
 
     @Override
@@ -229,6 +243,39 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
+    private class GetCardTask extends AsyncTask<Integer, Integer, JSONObject> {
+        protected JSONObject doInBackground(Integer... num) {
+            DefaultHttpClient client = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet("http://jobmingle.me/api/getCards/" + num[0]);
+            try {
+                HttpResponse execute = client.execute(httpGet);
+                InputStream inputStream = execute.getEntity().getContent();
+                // json is UTF-8 by default
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+                while ((line = reader.readLine()) != null)
+                {
+                    Log.d("JobMingle", line);
+                    sb.append(line).append("\n");
+                }
+                String result = sb.toString();
+                return new JSONObject(result);
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+            //setProgressPercent(progress[0]);
+        }
+
+        protected void onPostExecute(JSONObject result) {
+            //showDialog("Downloaded " + result + " bytes");
+        }
+    }
 
 
 }
