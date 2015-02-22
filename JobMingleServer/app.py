@@ -87,7 +87,7 @@ def get_card():
     username = github.get('users/' + user)["login"]
     name = github.get('users/'+user)["name"]
     nbOfRepos = github.get('users/' + user)['public_repos']
-    repositories = github.get('user/' + user + '/repos')
+    repositories = github.get('users/' + user + '/repos')
    
     i=2
     tempRepoNumber = nbOfRepos
