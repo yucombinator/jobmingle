@@ -8,8 +8,8 @@ import oauth_config
 app = Flask(__name__)
 app.config['GITHUB_CLIENT_ID'] = oauth_config.github_public_key
 app.config['GITHUB_CLIENT_SECRET'] = oauth_config.github_secret_key
-#app.config['SQLALCHEMY_DATABASE_URI'] = oauth_config.db_uri
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = oauth_config.db_uri
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 db = SQLAlchemy(app)
 
 SECRET_KEY = 'development key'
@@ -108,6 +108,6 @@ def hello_world():
     return 'Hello World'
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(host = '0.0.0.0', port = 80, debug = True)
 
 
