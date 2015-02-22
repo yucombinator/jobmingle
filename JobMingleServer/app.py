@@ -1,4 +1,4 @@
-from flask import Flask, request, flash, url_for, redirect, g, jsonify
+from flask import Flask, request, flash, url_for, redirect, session, g, jsonify
 from flask.ext.github import GitHub
 from flask.ext.sqlalchemy import SQLAlchemy
 from card import Card
@@ -8,8 +8,12 @@ import oauth_config
 app = Flask(__name__)
 app.config['GITHUB_CLIENT_ID'] = oauth_config.github_public_key
 app.config['GITHUB_CLIENT_SECRET'] = oauth_config.github_secret_key
-app.config['SQLALCHEMY_DATABASE_URI'] = oauth_config.db_uri
+#app.config['SQLALCHEMY_DATABASE_URI'] = oauth_config.db_uri
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 db = SQLAlchemy(app)
+
+SECRET_KEY = 'development key'
+app.secret_key = SECRET_KEY
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -33,6 +37,12 @@ class Match(db.Model):
 
 github = GitHub(app)
 
+@app.before_request
+def before_request():
+    g.user = None
+    if 'user_id' in session:
+        g.user = User.query.get(session['user_id'])
+
 @app.route('/login')
 def login():
     return github.authorize()
@@ -50,8 +60,9 @@ def authorized(token):
         user = User(token)
         db.session.add(user)
 
-    user.github_access_token = token
+    user.oauth_token = token
     db.session.commit()
+    session['user_id'] = user.id
     g.user = user
     return redirect(next_url)
 
@@ -59,29 +70,42 @@ def authorized(token):
 def token_getter():
     user = g.user
     if user is not None:
-        return user.github_access_token
+        return user.oauth_token
 
 @app.route('/api/getCards/<int:number>')
 def get_cards(number):
     cards = []
     for i in range(number):
         cards.append(get_card())
-    return jsonify(cards)
+    return jsonify(**{'data':cards})
 
 def get_card():
     #get a random user
     #user = User.query.all()
     user = 'icechen1'
     #populate a card
+<<<<<<< HEAD
     username = github.get('users/' + user)["login"]
     name = github.get('users/'+user)["name"]
     nbOfRepos = github.get('users/' + user)['public_repos']
     repositories = github.get('user/' + user + '/repos')
     repoIndex = -1
+=======
+    username = github.get('users/' + user)["login"] 
+    name = github.get('users/'+user)["name"] 
+    nbOfRepos = github.get('users/' + user)['public_repos'] 
+    repositories = github.get('users/' + user + '/repos')
+>>>>>>> 717e5e8a9587683e1ba9c74f59edf9c4f10a1d3b
     
-    if nbOfRepos <= 5:
-        repoIndex = random.randint(0,nbOfRepos-1)
+    i=2
+    tempRepoNumber = nbOfRepos
+    while tempRepoNumber > 30:
+        tempRepo = (github.get('users/' + user + '/repos?page='+ str(i)))
+        i+=1
+        tempRepoNumber-=30
+        repositories = repositories + tempRepo
     
+<<<<<<< HEAD
     else:
         tuples = []
         for x in range(nbOfRepos):
@@ -91,10 +115,22 @@ def get_card():
         repoIndex = tuples[random.randint(0,4)][0]
     
     repoName = repositories[repoIndex]['name']
+=======
+    repoIndex = -1 
+    if nbOfRepos <= 5: 
+        repoIndex = random.randint(0,nbOfRepos-1) 
+    else: 
+        tuples = [] 
+        for x in range(len(repositories)): 
+            tuples.append((x,repositories[x]['stargazers_count'])) 
+        sorted(tuples, key = lambda stars:stars[1], reverse = True)
+        repoIndex = tuples[random.randint(0,4)][0] 
+    repoName = repositories[repoIndex]['name'] 
+>>>>>>> 717e5e8a9587683e1ba9c74f59edf9c4f10a1d3b
     repoDescription = repositories[repoIndex]['description']
    
     #image...
-    return Card(username,name, repoName, repoDescription)
+    return {'username': username, 'name': name, 'repo_name' : repoName, 'description' : repoDescription}
 
 @app.route('/')
 def hello_world():

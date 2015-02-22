@@ -3,6 +3,7 @@ package com.icechen1.jobmingle;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.app.Fragment;
@@ -37,6 +38,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 
+//import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -60,6 +63,11 @@ public class MainActivity extends ActionBarActivity
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
+       // CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+        //                .setDefaultFontPath("fonts/Arvo-Regular.ttf")
+        //                .setFontAttrId(R.attr.fontPath)
+        //                .build()
+        //);
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
@@ -232,6 +240,8 @@ public class MainActivity extends ActionBarActivity
                     flingContainer.getTopCardListener().selectRight();
                 }
             });
+
+
             return rootView;
         }
 
